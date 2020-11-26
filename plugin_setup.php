@@ -60,19 +60,19 @@ if(isset($_POST['updatePlugin']))
 	$updateResult = updatePluginFromGitHub($gitURL, $branch="master", $pluginName);
 
 	logEntry("update result: ". $updateResult);//."<br/> \n";
-	
+
 	if(file_exists($settings['pluginDirectory']."/".$pluginName."/fpp_install.sh"))
 	{
 		$updateInstallCMD = $settings['pluginDirectory']."/".$pluginName."/fpp_install.sh";
 		logEntry("running upgrade install script: ".$updateInstallCMD);
 		exec($updateInstallCMD,$sysOutput);
 		//echo $sysOutput;
-	
+
 	} else {
 		logEntry("No fpp_install.sh upgrade script available");
 	}
-	
-	
+
+
 }
 if (isset($pluginSettings['DEBUG'])) {
     $DEBUG = $pluginSettings['DEBUG'];
@@ -82,23 +82,23 @@ if(isset($_POST['submit']))
 {
 	if($DEBUG)
         print_r($_POST);
-	
+
 
 //	echo "Writring config fie <br/> \n";
 	WriteSettingToFile("MONTH",urlencode($_POST['MONTH']), $pluginName);
 	WriteSettingToFile("DAY",urlencode($_POST['DAY']), $pluginName);
 	WriteSettingToFile("YEAR",urlencode($_POST['YEAR']), $pluginName);
-	
+
 	WriteSettingToFile("MIN",urlencode($_POST['MIN']), $pluginName);
 	WriteSettingToFile("HOUR",urlencode($_POST['HOUR']), $pluginName);
 	WriteSettingToFile("PRE_TEXT",urlencode($_POST["PRE_TEXT"]), $pluginName);
 	WriteSettingToFile("POST_TEXT",urlencode($_POST["POST_TEXT"]), $pluginName);
 	WriteSettingToFile("EVENT_NAME",urlencode($_POST["EVENT_NAME"]), $pluginName);
-	
+
 	WriteSettingToFile("LAST_READ",urlencode($_POST["LAST_READ"]), $pluginName);
-	
+
 	WriteSettingToFile("MATRIX_LOCATION",urlencode($_POST["MATRIX_LOCATION"]), $pluginName);
-	
+
     $pluginConfigFile = $settings['configDirectory'] . "/plugin." . $pluginName;
     if (file_exists($pluginConfigFile)) {
         $pluginSettings = parse_ini_file($pluginConfigFile);
@@ -118,7 +118,7 @@ foreach ($pluginSettings as $key => $value) {
 	${$key} = urldecode($value);
 
 }
-	
+
 if(!isset($PRE_TEXT) || $PRE_TEXT == "") {
 	$PRE_TEXT = "It is ";
 }
@@ -151,9 +151,9 @@ if(!isset($LAST_READ) || (int)$LAST_READ == 0 || $LAST_READ == "") {
     }
 
 $Plugin_DBName = $messageQueueFile;
-	
+
 $db = new SQLite3($Plugin_DBName) or die('Unable to open database');
-	
+
 //create the default tables if they do not exist!
 createTables();
 ?>
@@ -243,9 +243,9 @@ if ($y >= 1){
 }
 if ($d >= 1){
 	if ($d >=2){
-		$messageText .= intval($d). " days ";
+		$messageText .= intval($d). " sleeps ";
 	} else {
-		$messageText .= intval($d). " day ";
+		$messageText .= intval($d). " sleep ";
 	}
 	if($INCLUDE_HOURS == "ON"){
 		if ($h >=2) {
@@ -261,7 +261,7 @@ if ($d >= 1){
 			$messageText .= intval($m). " minutes ";
 		} else {
 			$messageText .= intval($m). " minute ";
-		}	
+		}
 	}
 } else {
 	if ($h >=2) {
@@ -350,7 +350,7 @@ MATRIX Message Plugin Location: (IP Address. default 127.0.0.1);
 </form>
 
 
-<p>To report a bug, please file it against the sms Control plugin project on Git:<? echo $gitURL;?> 
+<p>To report a bug, please file it against the sms Control plugin project on Git:<? echo $gitURL;?>
 </fieldset>
 </div>
 <br />
